@@ -1,11 +1,19 @@
 <?php
 
-namespace App\Filament\Resources\TeamMemberResource\Pages;
+namespace App\Filament\Resources\LeadershipMemberResource\Pages;
 
-use App\Filament\Resources\TeamMemberResource;
+use App\Filament\Resources\LeadershipMemberResource;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateTeamMember extends CreateRecord
+class CreateLeadershipMember extends CreateRecord
 {
-    protected static string $resource = TeamMemberResource::class;
+    protected static string $resource = LeadershipMemberResource::class;
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['is_leadership'] = true;
+        $data['specialty_id'] = null;
+
+        return $data;
+    }
 }

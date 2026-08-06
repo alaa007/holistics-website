@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\TeamMemberResource\Pages;
+namespace App\Filament\Resources\LeadershipMemberResource\Pages;
 
-use App\Filament\Resources\TeamMemberResource;
+use App\Filament\Resources\LeadershipMemberResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListTeamMembers extends ListRecords
+class ListLeadershipMembers extends ListRecords
 {
-    protected static string $resource = TeamMemberResource::class;
+    protected static string $resource = LeadershipMemberResource::class;
 
     protected function getHeaderActions(): array
     {
