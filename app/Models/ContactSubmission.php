@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class ContactSubmission extends Model
+{
+    protected $fillable = ['name', 'phone', 'email', 'service', 'message', 'is_handled'];
+
+    protected $casts = ['is_handled' => 'boolean'];
+}
