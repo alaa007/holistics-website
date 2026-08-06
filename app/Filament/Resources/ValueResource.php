@@ -18,6 +18,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 
 class ValueResource extends Resource
@@ -40,7 +41,7 @@ class ValueResource extends Resource
             Section::make('Content')
                 ->columns(2)
                 ->schema([
-                    Select::make('icon')->options(Icons::keys())->searchable()->required()->columnSpanFull(),
+                    Select::make('icon')->options(Icons::selectOptions())->allowHtml()->native(false)->searchable()->required()->columnSpanFull(),
                     TextInput::make('title_en')->label('Title (English)')->required(),
                     TextInput::make('title_ar')->label('Title (Arabic)')->extraInputAttributes(['dir' => 'rtl']),
                     Textarea::make('text_en')->label('Description (English)')->required()->rows(4),
@@ -61,7 +62,7 @@ class ValueResource extends Resource
             ->defaultSort('order')
             ->columns([
                 TextColumn::make('order')->sortable(),
-                TextColumn::make('icon'),
+                ViewColumn::make('icon')->view('filament.tables.columns.icon-preview'),
                 TextColumn::make('title_en')->label('Title'),
                 IconColumn::make('is_active')->boolean(),
             ])

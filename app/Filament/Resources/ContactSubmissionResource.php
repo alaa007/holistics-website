@@ -28,7 +28,7 @@ class ContactSubmissionResource extends Resource
 
     protected static ?string $navigationLabel = 'Contact Inquiries';
 
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 8;
 
     public static function form(Schema $schema): Schema
     {

@@ -6,6 +6,7 @@ use App\Models\AboutContent;
 use App\Models\HomeSlide;
 use App\Models\Service;
 use App\Models\Setting;
+use App\Models\Specialty;
 use App\Models\Stat;
 use App\Models\TeamMember;
 use App\Models\User;
@@ -217,10 +218,7 @@ class DatabaseSeeder extends Seeder
                 'bio_en' => 'A clinical pharmacist with expertise in pharmaceutical care and therapeutic nutrition, with a background in the pharmaceutical industry and regulatory affairs. She oversees clinical pharmacy services, medication management, nutritional support, and patient education — ensuring safe, evidence-based, and integrated care.'],
         ];
         foreach ($leadership as $i => $l) {
-            $l['specialty'] = 'leadership';
-            $l['specialty_label_en'] = 'Leadership';
             $l['is_leadership'] = true;
-            $l['is_placeholder'] = false;
             $l['order'] = $i + 1;
             TeamMember::updateOrCreate(['name' => $l['name']], $l);
         }
@@ -240,10 +238,21 @@ class DatabaseSeeder extends Seeder
                 'bio_en' => 'The single point of contact who keeps every patient\'s care plan on track.'],
         ];
         foreach ($directory as $i => $d) {
-            $d['is_leadership'] = false;
-            $d['is_placeholder'] = true;
-            $d['order'] = $i + 1;
-            TeamMember::updateOrCreate(['specialty' => $d['specialty'], 'role_en' => $d['role_en']], $d);
+            $specialty = Specialty::updateOrCreate(
+                ['slug' => $d['specialty']],
+                ['label_en' => $d['specialty_label_en'], 'order' => $i + 1]
+            );
+
+            TeamMember::updateOrCreate(
+                ['specialty_id' => $specialty->id, 'role_en' => $d['role_en']],
+                [
+                    'specialty_id' => $specialty->id,
+                    'role_en' => $d['role_en'],
+                    'bio_en' => $d['bio_en'],
+                    'is_leadership' => false,
+                    'order' => $i + 1,
+                ]
+            );
         }
     }
 }

@@ -26,14 +26,14 @@
         </div>
         <div class="filter-chips">
           <button class="active" data-specialty="all">{{ __('site.team.all_specialties') }}</button>
-          @foreach($members->unique('specialty') as $m)
-            <button data-specialty="{{ $m->specialty }}">{{ $m->trans('specialty_label') }}</button>
+          @foreach($members->pluck('specialty')->filter()->unique('id') as $s)
+            <button data-specialty="{{ $s->slug }}">{{ $s->trans('label') }}</button>
           @endforeach
         </div>
       </div>
       <div class="grid grid-3" data-team-grid>
         @foreach($members as $m)
-          <div class="card team-card" data-specialty="{{ $m->specialty }}" data-name="{{ $m->trans('role') }}">
+          <div class="card team-card" data-specialty="{{ $m->specialty?->slug }}" data-name="{{ $m->trans('role') }}">
             <div class="avatar">
               @if($m->photoUrl())
                 <img src="{{ $m->photoUrl() }}" alt="{{ $m->name }}">
@@ -44,7 +44,7 @@
             <h3>{{ $m->name ?: __('site.team.coming_soon') }}</h3>
             <div class="role">{{ $m->trans('role') }}</div>
             <p class="bio">{{ $m->trans('bio') }}</p>
-            <span class="specialty-tag">{{ $m->trans('specialty_label') }}</span>
+            <span class="specialty-tag">{{ $m->specialty?->trans('label') }}</span>
           </div>
         @endforeach
       </div>

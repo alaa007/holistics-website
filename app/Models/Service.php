@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Support\HasTranslatedFields;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Service extends Model
 {
@@ -16,6 +17,26 @@ class Service extends Model
     ];
 
     protected $casts = ['is_active' => 'boolean'];
+
+    protected static function booted(): void
+    {
+        static::saving(function (Service $service) {
+            if (filled($service->slug)) {
+                return;
+            }
+
+            $base = Str::slug($service->title_en);
+            $slug = $base;
+            $suffix = 2;
+
+            while (static::where('slug', $slug)->where('id', '!=', $service->id)->exists()) {
+                $slug = "{$base}-{$suffix}";
+                $suffix++;
+            }
+
+            $service->slug = $slug;
+        });
+    }
 
     public function getRouteKeyName(): string
     {

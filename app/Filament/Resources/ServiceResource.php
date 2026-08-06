@@ -18,6 +18,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 
 class ServiceResource extends Resource
@@ -40,8 +41,7 @@ class ServiceResource extends Resource
             Section::make('Service Details')
                 ->columns(2)
                 ->schema([
-                    TextInput::make('slug')->required()->unique(ignoreRecord: true)->helperText('Used in the URL, e.g. home-healthcare'),
-                    Select::make('icon')->options(Icons::keys())->searchable()->required(),
+                    Select::make('icon')->options(Icons::selectOptions())->allowHtml()->native(false)->searchable()->required(),
                     TextInput::make('order')->numeric()->default(0),
                     Toggle::make('is_active')->label('Active')->default(true),
                 ]),
@@ -68,9 +68,8 @@ class ServiceResource extends Resource
             ->defaultSort('order')
             ->columns([
                 TextColumn::make('order')->sortable(),
-                TextColumn::make('icon'),
+                ViewColumn::make('icon')->view('filament.tables.columns.icon-preview'),
                 TextColumn::make('title_en')->label('Title')->searchable(),
-                TextColumn::make('slug'),
                 IconColumn::make('is_active')->boolean(),
             ])
             ->recordActions([EditAction::make(), DeleteAction::make()])

@@ -17,6 +17,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 
 class StatResource extends Resource
@@ -39,7 +40,7 @@ class StatResource extends Resource
             Section::make('Content')
                 ->columns(2)
                 ->schema([
-                    Select::make('icon')->options(Icons::keys())->searchable()->required()->columnSpanFull(),
+                    Select::make('icon')->options(Icons::selectOptions())->allowHtml()->native(false)->searchable()->required()->columnSpanFull(),
                     TextInput::make('label_en')->label('Label (English)')->required(),
                     TextInput::make('label_ar')->label('Label (Arabic)')->extraInputAttributes(['dir' => 'rtl']),
                 ]),
@@ -58,7 +59,7 @@ class StatResource extends Resource
             ->defaultSort('order')
             ->columns([
                 TextColumn::make('order')->sortable(),
-                TextColumn::make('icon'),
+                ViewColumn::make('icon')->view('filament.tables.columns.icon-preview'),
                 TextColumn::make('label_en')->label('Label'),
                 IconColumn::make('is_active')->boolean(),
             ])

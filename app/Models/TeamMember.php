@@ -12,15 +12,18 @@ class TeamMember extends Model
 
     protected $fillable = [
         'name', 'credentials', 'role_en', 'role_ar', 'bio_en', 'bio_ar',
-        'specialty', 'specialty_label_en', 'specialty_label_ar',
-        'photo', 'is_leadership', 'is_placeholder', 'order', 'is_active',
+        'specialty_id', 'photo', 'is_leadership', 'order', 'is_active',
     ];
 
     protected $casts = [
         'is_leadership' => 'boolean',
-        'is_placeholder' => 'boolean',
         'is_active' => 'boolean',
     ];
+
+    public function specialty()
+    {
+        return $this->belongsTo(Specialty::class);
+    }
 
     /**
      * Public URL for the uploaded photo, or null when there is none.

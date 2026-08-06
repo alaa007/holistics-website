@@ -28,8 +28,13 @@ class BackendPanelProvider extends PanelProvider
             ->id('backend')
             ->path('backend')
             ->login()
+            ->brandName('Holistics')
+            ->brandLogo(asset('assets/img/logo-full.png'))
+            ->brandLogoHeight('2.75rem')
+            ->favicon(asset('assets/img/icon-mark.png'))
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#0c5c5f'),
+                'warning' => Color::hex('#f2a90c'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
