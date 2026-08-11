@@ -2,7 +2,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <a href="{{ route('home') }}" class="footer-brand">
+        <a href="{{ localized_route('home') }}" class="footer-brand">
           <img src="{{ asset('assets/img/icon-mark.png') }}" alt="Holistics">
           <span>{{ $siteSettings->brand_name ?? 'HOLISTICS' }}</span>
         </a>
@@ -16,17 +16,17 @@
       <div class="footer-col">
         <h4>{{ __('site.footer.quick_links') }}</h4>
         <ul>
-          <li><a href="{{ route('about') }}">{{ __('site.nav.about') }}</a></li>
-          <li><a href="{{ route('services.index') }}">{{ __('site.nav.services') }}</a></li>
-          <li><a href="{{ route('team') }}">{{ __('site.nav.team') }}</a></li>
-          <li><a href="{{ route('contact') }}">{{ __('site.nav.contact') }}</a></li>
+          <li><a href="{{ localized_route('about') }}">{{ __('site.nav.about') }}</a></li>
+          <li><a href="{{ localized_route('services.index') }}">{{ __('site.nav.services') }}</a></li>
+          <li><a href="{{ localized_route('team') }}">{{ __('site.nav.team') }}</a></li>
+          <li><a href="{{ localized_route('contact') }}">{{ __('site.nav.contact') }}</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>{{ __('site.footer.services') }}</h4>
         <ul>
           @foreach($footerServices ?? [] as $s)
-            <li><a href="{{ route('services.show', $s->slug) }}">{{ $s->trans('title') }}</a></li>
+            <li><a href="{{ localized_route('services.show', $s->slug) }}">{{ $s->trans('title') }}</a></li>
           @endforeach
         </ul>
       </div>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\SetLocale;
 use App\Support\Seo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,28 +15,22 @@ class LocaleController extends Controller
     public function switch(Request $request, string $locale): RedirectResponse
     {
         if (! in_array($locale, Seo::LOCALES, true)) {
-            $locale = SetLocale::preferred($request);
+            $locale = Seo::DEFAULT_LOCALE;
         }
 
-        session(['locale' => $locale]);
-
-        return redirect()->route('home', ['locale' => $locale]);
+        return redirect()->route(Seo::routeNameFor('home', $locale));
     }
 
     /**
-     * Sends a legacy unprefixed URL (/about) to its localized twin (/en/about).
+     * Sends the /en/... URLs this site briefly used to their bare
+     * equivalents: /en/about becomes /about.
      *
-     * Deliberately a 302: the target depends on the visitor's session and
-     * Accept-Language, so it differs between requests to the same URL. A 301
-     * would be cached by the browser and any CDN, permanently pinning the
-     * first visitor's language onto that URL for everyone behind the cache.
+     * Permanent, unlike a language-detecting redirect: the target is a fixed
+     * function of the path, so caching it cannot pin the wrong language onto
+     * a URL for anyone.
      */
-    public function redirectToLocalized(Request $request): RedirectResponse
+    public function redirectFromEnglishPrefix(Request $request, string $path): RedirectResponse
     {
-        $locale = SetLocale::preferred($request);
-        $path = trim($request->path(), '/');
-        $target = $path === '' ? "/{$locale}" : "/{$locale}/{$path}";
-
-        return redirect($target, 302);
+        return redirect('/'.ltrim($path, '/'), 301);
     }
 }

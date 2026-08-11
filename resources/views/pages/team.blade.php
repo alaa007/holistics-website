@@ -5,7 +5,7 @@
   <section class="page-hero">
     <div class="container">
       @include('partials.breadcrumb', ['trail' => [
-        ['label' => __('site.breadcrumb_home'), 'url' => route('home')],
+        ['label' => __('site.breadcrumb_home'), 'url' => localized_route('home')],
         ['label' => __('site.nav.team'), 'url' => null],
       ]])
       <div class="eyebrow">{{ __('site.team.eyebrow') }}</div>

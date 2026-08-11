@@ -5,7 +5,7 @@
   <section class="page-hero">
     <div class="container">
       @include('partials.breadcrumb', ['trail' => [
-        ['label' => __('site.breadcrumb_home'), 'url' => route('home')],
+        ['label' => __('site.breadcrumb_home'), 'url' => localized_route('home')],
         ['label' => __('site.nav.contact'), 'url' => null],
       ]])
       <div class="eyebrow">{{ __('site.contact.eyebrow') }}</div>
@@ -61,7 +61,7 @@
               <div class="form-status">{{ __('site.contact.success') }}</div>
             @endif
 
-            <form method="POST" action="{{ route('contact.store') }}" data-inquiry-form>
+            <form method="POST" action="{{ localized_route('contact.store') }}" data-inquiry-form>
               @csrf
               <div class="form-row">
                 <div class="field">

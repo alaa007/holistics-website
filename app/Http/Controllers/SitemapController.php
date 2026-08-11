@@ -66,7 +66,7 @@ class SitemapController extends Controller
         $urls = [];
 
         foreach (Seo::LOCALES as $locale) {
-            $urls[$locale] = route($routeName, array_merge($parameters, ['locale' => $locale]));
+            $urls[$locale] = route(Seo::routeNameFor($routeName, $locale), $parameters);
         }
 
         return $urls;

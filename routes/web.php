@@ -7,37 +7,44 @@ use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TeamController;
-use App\Support\Seo;
 use Illuminate\Support\Facades\Route;
 
 /*
- * Every public page lives under a locale prefix (/en/..., /ar/...) so each
- * language has its own indexable URL and hreflang has something to point at.
- * SetLocale reads the prefix and registers it as a URL default, which is why
- * route('about') in a view still works without passing the locale by hand.
+ * English is the default language and lives at the bare path (/about);
+ * Arabic is prefixed (/ar/about).
+ *
+ * The same routes are registered twice from one closure. The Arabic copy
+ * carries an "ar." name prefix, so every page has two distinct route names —
+ * "about" and "ar.about" — and each language has its own real, indexable URL.
+ *
+ * Views do not call route() directly for these; localized_route() in
+ * app/Support/helpers.php picks the right name for the active locale.
+ * Duplicate route names were tried first and rejected: which of the two a
+ * name resolves to is unspecified behaviour.
  */
-Route::prefix('{locale}')
-    ->whereIn('locale', Seo::LOCALES)
-    ->group(function () {
-        Route::get('/', [HomeController::class, 'index'])->name('home');
-        Route::get('/about', [AboutController::class, 'index'])->name('about');
-        Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
-        Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');
-        Route::get('/team', [TeamController::class, 'index'])->name('team');
-        Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-        Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-    });
+$localizedRoutes = function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/about', [AboutController::class, 'index'])->name('about');
+    Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+    Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');
+    Route::get('/team', [TeamController::class, 'index'])->name('team');
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+};
+
+Route::group([], $localizedRoutes);
+Route::prefix('ar')->name('ar.')->group($localizedRoutes);
 
 Route::get('/lang/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 
 /*
- * Legacy unprefixed URLs keep working: /about redirects to /en/about, or to
- * the visitor's remembered locale. See LocaleController::redirectToLocalized
- * for why these are 302 and not 301.
+ * The /en/... URLs this site briefly used redirect to their bare equivalents.
+ * Permanent, because the target is a fixed function of the path rather than
+ * something negotiated per visitor, so caching it cannot pin the wrong
+ * language onto a URL.
  */
-Route::get('/', [LocaleController::class, 'redirectToLocalized'])->name('root');
-Route::get('/{path}', [LocaleController::class, 'redirectToLocalized'])
-    ->where('path', 'about|services|team|contact');
-Route::get('/services/{service}', [LocaleController::class, 'redirectToLocalized']);
+Route::redirect('/en', '/', 301);
+Route::get('/en/{path}', [LocaleController::class, 'redirectFromEnglishPrefix'])
+    ->where('path', '.*');

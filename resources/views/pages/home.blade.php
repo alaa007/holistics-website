@@ -38,7 +38,7 @@
           <div class="section-tag">{{ __('site.home.about_tag') }}</div>
           <h2 class="section-title">{{ __('site.home.about_title') }}</h2>
           <p class="section-lead" style="margin-bottom:20px;">{{ __('site.home.about_text') }}</p>
-          <a href="{{ route('about') }}" class="btn btn-dark">{{ __('site.home.learn_more') }} <x-icon name="arrow-right" /></a>
+          <a href="{{ localized_route('about') }}" class="btn btn-dark">{{ __('site.home.learn_more') }} <x-icon name="arrow-right" /></a>
         </div>
         <div class="mv-card" style="margin:0;">
           <div class="icon"><x-icon name="target" /></div>
@@ -62,12 +62,12 @@
             <div class="icon"><x-icon :name="$s->icon" /></div>
             <h3>{{ $s->trans('title') }}</h3>
             <p>{{ $s->trans('short') }}</p>
-            <a href="{{ route('services.show', $s->slug) }}" class="link">{{ __('site.home.learn_more_short') }} <x-icon name="arrow-right" /></a>
+            <a href="{{ localized_route('services.show', $s->slug) }}" class="link">{{ __('site.home.learn_more_short') }} <x-icon name="arrow-right" /></a>
           </div>
         @endforeach
       </div>
       <div class="text-center" style="margin-top:36px;">
-        <a href="{{ route('services.index') }}" class="btn btn-dark">{{ __('site.home.view_all_services') }} <x-icon name="arrow-right" /></a>
+        <a href="{{ localized_route('services.index') }}" class="btn btn-dark">{{ __('site.home.view_all_services') }} <x-icon name="arrow-right" /></a>
       </div>
     </div>
   </section>

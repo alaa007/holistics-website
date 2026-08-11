@@ -22,13 +22,59 @@ class Seo
 {
     public const LOCALES = ['en', 'ar'];
 
+    /** The language served from the bare path, with no prefix in the URL. */
+    public const DEFAULT_LOCALE = 'en';
+
+    /**
+     * Route name for a page in a given language. Arabic routes carry an
+     * "ar." prefix; the default language uses the bare name.
+     */
+    public static function routeNameFor(string $name, string $locale): string
+    {
+        $name = static::unlocalizedRouteName($name) ?? $name;
+
+        return $locale === self::DEFAULT_LOCALE ? $name : "{$locale}.{$name}";
+    }
+
+    /**
+     * Strips the locale prefix from a route name: "ar.about" becomes "about".
+     * Returns null for routes outside the localized groups.
+     */
+    public static function unlocalizedRouteName(?string $name): ?string
+    {
+        if (blank($name)) {
+            return null;
+        }
+
+        foreach (self::LOCALES as $locale) {
+            if (str_starts_with($name, "{$locale}.")) {
+                return substr($name, strlen($locale) + 1);
+            }
+        }
+
+        return $name;
+    }
+
+    /** The language a route name belongs to. */
+    public static function localeForRouteName(?string $name): string
+    {
+        foreach (self::LOCALES as $locale) {
+            if ($locale !== self::DEFAULT_LOCALE && str_starts_with((string) $name, "{$locale}.")) {
+                return $locale;
+            }
+        }
+
+        return self::DEFAULT_LOCALE;
+    }
+
     /** Locale codes as Open Graph expects them. */
     private const OG_LOCALES = ['en' => 'en_US', 'ar' => 'ar_AR'];
 
     public static function resolve(): array
     {
         $settings = Setting::current();
-        $page = PageSeo::forRoute(Route::currentRouteName());
+        // page_seo rows are keyed by the bare name, shared across languages.
+        $page = PageSeo::forRoute(static::unlocalizedRouteName(Route::currentRouteName()));
         $record = static::currentRecord();
 
         $title = static::firstFilled([
@@ -95,13 +141,25 @@ class Seo
         $route = Route::current();
         $name = $route?->getName();
 
-        // SetLocale strips the {locale} parameter, so test the route's URI
-        // pattern rather than its bound parameters.
-        if ($route === null || blank($name) || ! str_contains($route->uri(), '{locale}')) {
+        if ($route === null || ! static::isLocalizedRouteName($name)) {
             return null;
         }
 
-        return route($name, array_merge($route->parameters(), ['locale' => $locale]));
+        return route(static::routeNameFor($name, $locale), $route->parameters());
+    }
+
+    /**
+     * True for the public pages that exist in both languages. Routes like the
+     * sitemap or the locale switcher have no alternate to point at.
+     */
+    public static function isLocalizedRouteName(?string $name): bool
+    {
+        if (blank($name)) {
+            return false;
+        }
+
+        return Route::has(static::routeNameFor($name, self::DEFAULT_LOCALE))
+            && Route::has(static::routeNameFor($name, 'ar'));
     }
 
     /**

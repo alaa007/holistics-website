@@ -5,8 +5,8 @@
   <section class="page-hero">
     <div class="container">
       @include('partials.breadcrumb', ['trail' => [
-        ['label' => __('site.breadcrumb_home'), 'url' => route('home')],
-        ['label' => __('site.nav.services'), 'url' => route('services.index')],
+        ['label' => __('site.breadcrumb_home'), 'url' => localized_route('home')],
+        ['label' => __('site.nav.services'), 'url' => localized_route('services.index')],
         ['label' => $service->trans('title'), 'url' => null],
       ]])
       <div class="eyebrow">{{ __('site.nav.services') }}</div>
@@ -42,7 +42,7 @@
             <h4>{{ __('site.services.other_services') }}</h4>
             <ul>
               @foreach($others as $o)
-                <li><a href="{{ route('services.show', $o->slug) }}">{{ $o->trans('title') }} <x-icon name="chevron-right" /></a></li>
+                <li><a href="{{ localized_route('services.show', $o->slug) }}">{{ $o->trans('title') }} <x-icon name="chevron-right" /></a></li>
               @endforeach
             </ul>
           </div>

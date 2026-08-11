@@ -5,7 +5,7 @@
   <section class="page-hero">
     <div class="container">
       @include('partials.breadcrumb', ['trail' => [
-        ['label' => __('site.breadcrumb_home'), 'url' => route('home')],
+        ['label' => __('site.breadcrumb_home'), 'url' => localized_route('home')],
         ['label' => __('site.nav.services'), 'url' => null],
       ]])
       <div class="eyebrow">{{ __('site.services.eyebrow') }}</div>
@@ -22,7 +22,7 @@
             <div class="icon"><x-icon :name="$s->icon" /></div>
             <h3>{{ $s->trans('title') }}</h3>
             <p>{{ $s->trans('short') }}</p>
-            <a href="{{ route('services.show', $s->slug) }}" class="link">{{ __('site.home.learn_more_short') }} <x-icon name="arrow-right" /></a>
+            <a href="{{ localized_route('services.show', $s->slug) }}" class="link">{{ __('site.home.learn_more_short') }} <x-icon name="arrow-right" /></a>
           </div>
         @endforeach
       </div>
@@ -37,8 +37,8 @@
           <p>{{ __('site.services.cta_text') }}</p>
         </div>
         <div class="cta-actions">
-          <a href="{{ route('services.show', 'healthcare-consultation') }}" class="btn btn-primary"><x-icon name="message-circle" :filled="true" /> {{ __('site.services.consult') }}</a>
-          <a href="{{ route('contact') }}" class="btn btn-outline"><x-icon name="arrow-right" :filled="true" /> {{ __('site.services.contact') }}</a>
+          <a href="{{ localized_route('services.show', 'healthcare-consultation') }}" class="btn btn-primary"><x-icon name="message-circle" :filled="true" /> {{ __('site.services.consult') }}</a>
+          <a href="{{ localized_route('contact') }}" class="btn btn-outline"><x-icon name="arrow-right" :filled="true" /> {{ __('site.services.contact') }}</a>
         </div>
       </div>
     </div>

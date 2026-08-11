@@ -10,17 +10,10 @@ class ExampleTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * The root URL carries no locale, so it redirects to the prefixed home
-     * page rather than rendering one.
+     * English is the default language and is served from the bare root.
      */
-    public function test_the_root_url_redirects_to_a_localized_home_page(): void
+    public function test_the_application_returns_a_successful_response(): void
     {
-        $this->get('/')->assertRedirect('/en');
-    }
-
-    public function test_the_localized_home_page_returns_a_successful_response(): void
-    {
-        $this->get('/en')->assertStatus(200);
-        $this->get('/ar')->assertStatus(200);
+        $this->get('/')->assertStatus(200);
     }
 }

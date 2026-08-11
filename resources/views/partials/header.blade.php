@@ -1,6 +1,6 @@
 <header class="site-header">
   <div class="container header-inner">
-    <a href="{{ route('home') }}" class="brand">
+    <a href="{{ localized_route('home') }}" class="brand">
       <img src="{{ asset('assets/img/icon-mark.png') }}" alt="Holistics logo">
       <span class="brand-text">
         <span class="name">{{ $siteSettings->brand_name ?? 'HOLISTICS' }}</span>
@@ -8,11 +8,11 @@
       </span>
     </a>
     <nav class="main-nav" aria-label="Primary">
-      <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">{{ __('site.nav.home') }}</a>
-      <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}">{{ __('site.nav.about') }}</a>
-      <a href="{{ route('services.index') }}" class="{{ request()->routeIs('services.*') ? 'active' : '' }}">{{ __('site.nav.services') }}</a>
-      <a href="{{ route('team') }}" class="{{ request()->routeIs('team') ? 'active' : '' }}">{{ __('site.nav.team') }}</a>
-      <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">{{ __('site.nav.contact') }}</a>
+      <a href="{{ localized_route('home') }}" class="{{ localized_route_is('home') ? 'active' : '' }}">{{ __('site.nav.home') }}</a>
+      <a href="{{ localized_route('about') }}" class="{{ localized_route_is('about') ? 'active' : '' }}">{{ __('site.nav.about') }}</a>
+      <a href="{{ localized_route('services.index') }}" class="{{ localized_route_is('services.*') ? 'active' : '' }}">{{ __('site.nav.services') }}</a>
+      <a href="{{ localized_route('team') }}" class="{{ localized_route_is('team') ? 'active' : '' }}">{{ __('site.nav.team') }}</a>
+      <a href="{{ localized_route('contact') }}" class="{{ localized_route_is('contact') ? 'active' : '' }}">{{ __('site.nav.contact') }}</a>
     </nav>
     <div class="header-actions">
       @php($altLocale = app()->getLocale() === 'ar' ? 'en' : 'ar')
