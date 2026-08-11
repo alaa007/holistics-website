@@ -78,6 +78,7 @@ class ServiceResource extends Resource
     {
         return $table
             ->defaultSort('order')
+            ->reorderable('order')
             ->columns([
                 TextColumn::make('order')->sortable(),
                 ViewColumn::make('icon')->view('filament.tables.columns.icon-preview'),

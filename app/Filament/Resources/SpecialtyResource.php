@@ -44,6 +44,7 @@ class SpecialtyResource extends Resource
     {
         return $table
             ->defaultSort('order')
+            ->reorderable('order')
             ->columns([
                 TextColumn::make('order')->sortable(),
                 TextColumn::make('label_en')->label('Label')->searchable(),

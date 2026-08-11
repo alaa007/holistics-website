@@ -96,6 +96,7 @@ class MedicalTeamMemberResource extends Resource
     {
         return $table
             ->defaultSort('order')
+            ->reorderable('order')
             ->columns([
                 ImageColumn::make('photo')->circular(),
                 TextColumn::make('name_en')->searchable()->placeholder('— placeholder —'),

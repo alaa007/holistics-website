@@ -72,6 +72,7 @@ class HomeSlideResource extends Resource
     {
         return $table
             ->defaultSort('order')
+            ->reorderable('order')
             ->columns([
                 TextColumn::make('order')->sortable(),
                 TextColumn::make('eyebrow_en')->label('Eyebrow')->searchable(),
