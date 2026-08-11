@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->default('info@holistics-care.com');
             $table->string('address_en')->default('Al-Dawha Medical Complex, Amman, Jordan');
             $table->string('address_ar')->nullable();
-            $table->string('map_query')->default('Al-Dawha+Medical+Complex+Amman+Jordan');
+            $table->string('map_query')->default('31.9526877,35.900444');
             $table->text('footer_about_en')->nullable();
             $table->text('footer_about_ar')->nullable();
             $table->timestamps();

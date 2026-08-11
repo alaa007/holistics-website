@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Contact Us — Holistics')
-@section('description', 'Get in touch with Holistics for home healthcare, nursing, physiotherapy, and medical supply services in Amman, Jordan.')
-
 @section('content')
 
   <section class="page-hero">
@@ -52,7 +49,7 @@
             </div>
           </div>
           <div class="map-frame">
-            <iframe src="https://www.google.com/maps?q={{ $siteSettings->map_query }}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Holistics location map"></iframe>
+            <iframe src="https://www.google.com/maps?q={{ urlencode($siteSettings->map_query) }}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Holistics location map"></iframe>
           </div>
         </div>
         <div>

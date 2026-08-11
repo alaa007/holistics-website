@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\AboutContent;
 use App\Models\HomeSlide;
+use App\Models\PageSeo;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Specialty;
@@ -32,6 +33,68 @@ class DatabaseSeeder extends Seeder
         $this->seedValues();
         $this->seedWhyUs();
         $this->seedTeam();
+        $this->seedPageSeo();
+    }
+
+    private function seedPageSeo(): void
+    {
+        $pages = [
+            [
+                'route_name' => 'home',
+                'label' => 'Home',
+                'meta_title_en' => 'Holistics — Integrated Home Healthcare & Medical Supplies in Amman, Jordan',
+                'meta_title_ar' => 'هوليستكس — رعاية صحية منزلية ومستلزمات طبية متكاملة في عمّان، الأردن',
+                'meta_description_en' => 'Holistics provides home healthcare, professional nursing, physiotherapy, medical equipment and supplies in Amman, Jordan. Healing the whole you.',
+                'meta_description_ar' => 'تقدّم هوليستكس خدمات الرعاية الصحية المنزلية والتمريض الاحترافي والعلاج الطبيعي والمعدات والمستلزمات الطبية في عمّان، الأردن. شفاءٌ يشمل الإنسان كاملاً.',
+            ],
+            [
+                'route_name' => 'about',
+                'label' => 'About Us',
+                'meta_title_en' => 'About Us — Holistics Medical Supplies & Care',
+                'meta_title_ar' => 'من نحن — هوليستكس للمستلزمات والرعاية الطبية',
+                'meta_description_en' => "Learn about Holistics' mission, vision, values, and leadership team — an integrated home healthcare provider based in Amman, Jordan.",
+                'meta_description_ar' => 'تعرّف على رسالة هوليستكس ورؤيتها وقيمها وفريقها القيادي — مزوّد رعاية صحية منزلية متكاملة مقرّه عمّان، الأردن.',
+            ],
+            [
+                'route_name' => 'services.index',
+                'label' => 'Services',
+                'meta_title_en' => 'Our Services — Holistics Medical Supplies & Care',
+                'meta_title_ar' => 'خدماتنا — هوليستكس للمستلزمات والرعاية الطبية',
+                'meta_description_en' => "Explore Holistics' full range of home healthcare, nursing, physiotherapy, equipment supply, and patient care services in Amman, Jordan.",
+                'meta_description_ar' => 'اكتشف مجموعة هوليستكس الكاملة من خدمات الرعاية الصحية المنزلية والتمريض والعلاج الطبيعي وتوريد المعدات ورعاية المرضى في عمّان، الأردن.',
+            ],
+            [
+                'route_name' => 'team',
+                'label' => 'Medical Team',
+                'meta_title_en' => 'Our Medical Team — Holistics',
+                'meta_title_ar' => 'فريقنا الطبي — هوليستكس',
+                'meta_description_en' => "Meet the doctors, nurses, and specialists behind Holistics' integrated home healthcare services in Amman, Jordan.",
+                'meta_description_ar' => 'تعرّف على الأطباء والممرضين والاختصاصيين الذين يقدّمون خدمات الرعاية الصحية المنزلية المتكاملة في هوليستكس بعمّان، الأردن.',
+            ],
+            [
+                'route_name' => 'contact',
+                'label' => 'Contact',
+                'meta_title_en' => 'Contact Us — Holistics',
+                'meta_title_ar' => 'اتصل بنا — هوليستكس',
+                'meta_description_en' => 'Get in touch with Holistics for home healthcare, nursing, physiotherapy, and medical supply services in Amman, Jordan.',
+                'meta_description_ar' => 'تواصل مع هوليستكس للحصول على خدمات الرعاية الصحية المنزلية والتمريض والعلاج الطبيعي والمستلزمات الطبية في عمّان، الأردن.',
+            ],
+            [
+                // Title and description always come from the service itself
+                // (title_en / short_en are required), so only the share image
+                // and noindex toggle on this row have any effect.
+                'route_name' => 'services.show',
+                'label' => 'Service Detail Pages',
+                'meta_title_en' => null,
+                'meta_title_ar' => null,
+                'meta_description_en' => null,
+                'meta_description_ar' => null,
+            ],
+        ];
+
+        foreach ($pages as $page) {
+            PageSeo::updateOrCreate(['route_name' => $page['route_name']], $page);
+        }
     }
 
     private function seedSettings(): void
@@ -39,13 +102,22 @@ class DatabaseSeeder extends Seeder
         Setting::updateOrCreate(['id' => 1], [
             'brand_name' => 'HOLISTICS',
             'tagline_en' => 'Healing the whole you',
+            'tagline_ar' => 'شفاءٌ يشمل الإنسان كاملاً',
             'whatsapp_number' => '962781818211',
             'phone_display' => '+962 78 181 8211',
             'phone_href' => 'tel:+962781818211',
             'email' => 'info@holistics-care.com',
             'address_en' => 'Al-Dawha Medical Complex, Amman, Jordan',
-            'map_query' => 'Al-Dawha+Medical+Complex+Amman+Jordan',
+            'address_ar' => 'مجمع الدوحة الطبي، عمّان، الأردن',
+            'map_query' => '31.9526877,35.900444',
+            'seo_title_suffix_en' => 'Holistics',
+            'seo_title_suffix_ar' => 'هوليستكس',
+            'seo_title_en' => 'Holistics — Integrated Home Healthcare in Amman, Jordan',
+            'seo_title_ar' => 'هوليستكس — رعاية صحية منزلية متكاملة في عمّان، الأردن',
+            'seo_description_en' => 'Holistics provides integrated home healthcare, nursing, physiotherapy, and medical supplies in Amman, Jordan.',
+            'seo_description_ar' => 'تقدّم هوليستكس رعاية صحية منزلية متكاملة وخدمات تمريض وعلاج طبيعي ومستلزمات طبية في عمّان، الأردن.',
             'footer_about_en' => 'Integrated home healthcare, medical supplies, and physiotherapy solutions — delivering compassionate, patient-centered care with international standards.',
+            'footer_about_ar' => 'رعاية صحية منزلية متكاملة، ومستلزمات طبية، وحلول للعلاج الطبيعي — نقدّمها بعناية إنسانية تتمحور حول المريض، ووفق معايير دولية.',
         ]);
     }
 
@@ -53,14 +125,23 @@ class DatabaseSeeder extends Seeder
     {
         AboutContent::updateOrCreate(['id' => 1], [
             'hero_title_en' => 'Healthcare that treats the whole person',
+            'hero_title_ar' => 'رعاية صحية تُعنى بالإنسان كاملاً',
             'hero_text_en' => 'Founded in 2025 in Amman, Jordan, Holistics is a trusted provider of home healthcare services, medical supplies, and physiotherapy solutions — delivering care with international standards and genuine compassion.',
+            'hero_text_ar' => 'تأسست هوليستكس عام 2025 في عمّان، الأردن، لتكون مزوّداً موثوقاً لخدمات الرعاية الصحية المنزلية والمستلزمات الطبية وحلول العلاج الطبيعي — نقدّم الرعاية وفق معايير دولية وبعناية إنسانية صادقة.',
             'who_we_are_p1_en' => 'Holistics is an Amman, Jordan-based provider of integrated home healthcare and medical support services. Through our multidisciplinary team, we deliver personalized, patient-centered care across the continuum of health — including nursing, wound care, post-operative and post-hospitalization care, therapeutic nutrition, physiotherapy, psychological support, diagnostic services, medical supplies, and home companion services.',
+            'who_we_are_p1_ar' => 'هوليستكس شركة مقرّها عمّان، الأردن، متخصصة في تقديم خدمات الرعاية الصحية المنزلية والدعم الطبي المتكاملة. ومن خلال فريقنا متعدد التخصصات، نقدّم رعاية شخصية تتمحور حول المريض وتغطي مراحل الرعاية الصحية كافة — بما في ذلك التمريض، والعناية بالجروح، والرعاية بعد العمليات الجراحية وما بعد الخروج من المستشفى، والتغذية العلاجية، والعلاج الطبيعي، والدعم النفسي، والخدمات التشخيصية، والمستلزمات الطبية، وخدمات المرافقة المنزلية.',
             'who_we_are_p2_en' => 'We are committed to providing quality-assured healthcare that meets the highest national and international standards, bringing compassionate, safe, and professional care directly to every patient\'s home.',
+            'who_we_are_p2_ar' => 'نلتزم بتقديم رعاية صحية مضمونة الجودة تلبي أعلى المعايير الوطنية والدولية، ونوصل الرعاية الآمنة والاحترافية بروح إنسانية إلى منزل كل مريض مباشرة.',
             'vision_en' => 'To become Jordan\'s leading integrated healthcare provider, recognized for excellence in home healthcare, rehabilitation, and medical supply services — while making quality healthcare accessible to every community.',
+            'vision_ar' => 'أن نصبح المزوّد الرائد للرعاية الصحية المتكاملة في الأردن، ومرجعاً في التميّز بخدمات الرعاية المنزلية والتأهيل والمستلزمات الطبية — مع جعل الرعاية الصحية عالية الجودة في متناول كل مجتمع.',
             'mission_en' => 'To provide comprehensive healthcare services and medical solutions that promote healing, independence, and well-being through professional excellence, innovation, and compassionate care.',
+            'mission_ar' => 'أن نقدّم خدمات رعاية صحية وحلولاً طبية شاملة تعزّز الشفاء والاستقلالية والعافية، من خلال التميّز المهني والابتكار والرعاية الإنسانية.',
             'commitment_en' => 'Healthcare is more than a service — it is a commitment to improving lives. We support patients throughout their healthcare journey with reliable medical care, advanced rehabilitation, and quality medical supplies that empower people to live healthier, safer, more independent lives.',
+            'commitment_ar' => 'الرعاية الصحية أكثر من مجرد خدمة — إنها التزام بتحسين حياة الناس. نرافق المرضى في رحلتهم الصحية برعاية طبية موثوقة، وتأهيل متقدم، ومستلزمات طبية عالية الجودة تمكّنهم من حياة أوفر صحة وأماناً واستقلالية.',
             'team_intro_en' => 'At Holistics, our strength lies in a multidisciplinary team of experienced healthcare professionals dedicated to delivering safe, compassionate, and evidence-based care. Working together with our network of medical consultants across various specialties, we ensure that every patient receives personalized, high-quality care tailored to their individual needs.',
+            'team_intro_ar' => 'تكمن قوتنا في هوليستكس في فريق متعدد التخصصات من محترفي الرعاية الصحية ذوي الخبرة، الملتزمين بتقديم رعاية آمنة وإنسانية قائمة على الأدلة العلمية. وبالتعاون مع شبكتنا من الاستشاريين الطبيين في مختلف التخصصات، نضمن أن يحظى كل مريض برعاية شخصية عالية الجودة مصمّمة وفق احتياجاته الفردية.',
             'advisory_note_en' => 'Our services are supported by a distinguished network of consultant physicians from a wide range of medical and surgical specialties. Their expertise provides clinical oversight, multidisciplinary collaboration, and access to the latest evidence-based medical practices, ensuring the highest standards of patient care.',
+            'advisory_note_ar' => 'تحظى خدماتنا بدعم شبكة متميزة من الأطباء الاستشاريين في نطاق واسع من التخصصات الطبية والجراحية. وتوفّر خبراتهم إشرافاً سريرياً وتعاوناً متعدد التخصصات ووصولاً إلى أحدث الممارسات الطبية القائمة على الأدلة، بما يضمن أعلى معايير رعاية المرضى.',
         ]);
     }
 

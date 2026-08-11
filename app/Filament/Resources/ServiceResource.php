@@ -6,6 +6,7 @@ use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
 use App\Support\Icons;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -58,6 +59,17 @@ class ServiceResource extends Resource
                     Textarea::make('included_ar')->label("What's included, one per line (Arabic)")->rows(6)->extraInputAttributes(['dir' => 'rtl']),
                     Textarea::make('who_en')->label("Who it's for (English)")->rows(4),
                     Textarea::make('who_ar')->label("Who it's for (Arabic)")->rows(4)->extraInputAttributes(['dir' => 'rtl']),
+                ]),
+            Section::make('SEO')
+                ->description('Optional. Leave blank to use the service title and short description.')
+                ->collapsed()
+                ->columns(2)
+                ->schema([
+                    TextInput::make('meta_title_en')->label('Meta title (English)')->maxLength(70)->placeholder('Defaults to the title above'),
+                    TextInput::make('meta_title_ar')->label('Meta title (Arabic)')->maxLength(70)->placeholder('Defaults to the title above')->extraInputAttributes(['dir' => 'rtl']),
+                    Textarea::make('meta_description_en')->label('Meta description (English)')->rows(3)->maxLength(180)->placeholder('Defaults to the short description above'),
+                    Textarea::make('meta_description_ar')->label('Meta description (Arabic)')->rows(3)->maxLength(180)->placeholder('Defaults to the short description above')->extraInputAttributes(['dir' => 'rtl']),
+                    FileUpload::make('og_image')->label('Social share image')->image()->directory('seo')->columnSpanFull(),
                 ]),
         ]);
     }

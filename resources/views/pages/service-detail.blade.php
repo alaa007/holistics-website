@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('title', $service->trans('title') . ' — Holistics')
-@section('description', $service->trans('short'))
-
 @section('content')
 
   <section class="page-hero">

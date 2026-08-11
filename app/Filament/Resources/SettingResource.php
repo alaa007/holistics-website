@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SettingResource\Pages;
 use App\Models\Setting;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Resources\Resource;
@@ -57,6 +58,27 @@ class SettingResource extends Resource
                 ->schema([
                     Textarea::make('footer_about_en')->label('Footer about text (English)')->rows(4),
                     Textarea::make('footer_about_ar')->label('Footer about text (Arabic)')->rows(4)->extraInputAttributes(['dir' => 'rtl']),
+                ]),
+            Section::make('Default SEO')
+                ->description('Used for any page that has no SEO of its own. Per-page overrides live under Page SEO.')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('seo_title_suffix_en')
+                        ->label('Title suffix (English)')
+                        ->helperText('Appended to page titles as "Page — Suffix". Skipped when the title already contains it.'),
+                    TextInput::make('seo_title_suffix_ar')
+                        ->label('Title suffix (Arabic)')
+                        ->extraInputAttributes(['dir' => 'rtl']),
+                    TextInput::make('seo_title_en')->label('Default meta title (English)')->maxLength(70),
+                    TextInput::make('seo_title_ar')->label('Default meta title (Arabic)')->maxLength(70)->extraInputAttributes(['dir' => 'rtl']),
+                    Textarea::make('seo_description_en')->label('Default meta description (English)')->rows(3)->maxLength(180),
+                    Textarea::make('seo_description_ar')->label('Default meta description (Arabic)')->rows(3)->maxLength(180)->extraInputAttributes(['dir' => 'rtl']),
+                    FileUpload::make('og_image')
+                        ->label('Default social share image')
+                        ->image()
+                        ->directory('seo')
+                        ->helperText('Shown when a page is shared on social media. 1200×630 works best.')
+                        ->columnSpanFull(),
                 ]),
         ]);
     }

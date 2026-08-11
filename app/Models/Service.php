@@ -14,6 +14,8 @@ class Service extends Model
         'slug', 'icon', 'title_en', 'title_ar', 'short_en', 'short_ar',
         'overview_en', 'overview_ar', 'included_en', 'included_ar',
         'who_en', 'who_ar', 'order', 'is_active',
+        'meta_title_en', 'meta_title_ar',
+        'meta_description_en', 'meta_description_ar', 'og_image',
     ];
 
     protected $casts = ['is_active' => 'boolean'];

@@ -15,7 +15,10 @@
       <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">{{ __('site.nav.contact') }}</a>
     </nav>
     <div class="header-actions">
-      <a class="icon-btn lang-switch" href="{{ route('locale.switch', app()->getLocale() === 'ar' ? 'en' : 'ar') }}" aria-label="{{ app()->getLocale() === 'ar' ? 'English' : 'العربية' }}" title="{{ app()->getLocale() === 'ar' ? 'English' : 'العربية' }}">
+      @php($altLocale = app()->getLocale() === 'ar' ? 'en' : 'ar')
+      {{-- Point at this same page in the other language, so the switcher is a
+           real crawlable link rather than a session toggle. --}}
+      <a class="icon-btn lang-switch" href="{{ \App\Support\Seo::localizedUrl($altLocale) ?? route('locale.switch', $altLocale) }}" hreflang="{{ $altLocale }}" aria-label="{{ app()->getLocale() === 'ar' ? 'English' : 'العربية' }}" title="{{ app()->getLocale() === 'ar' ? 'English' : 'العربية' }}">
         {{ app()->getLocale() === 'ar' ? 'EN' : 'AR' }}
       </a>
       <a class="icon-btn" href="https://wa.me/{{ $siteSettings->whatsapp_number ?? '962781818211' }}" target="_blank" rel="noopener" aria-label="{{ __('site.header.whatsapp') }}" title="{{ __('site.header.whatsapp') }}">

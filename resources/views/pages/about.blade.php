@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'About Us — Holistics Medical Supplies & Care')
-@section('description', "Learn about Holistics' mission, vision, values, and leadership team — an integrated home healthcare provider based in Amman, Jordan.")
-
 @section('content')
 
   <section class="page-hero">
