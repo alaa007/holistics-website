@@ -13,7 +13,7 @@
      subset so the text does not flash in a fallback face first. --}}
 <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/rubik/rubik-arabic.woff2') }}" crossorigin>
 @endif
-<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+<link rel="stylesheet" href="{{ versioned_asset('assets/css/style.css') }}">
 <meta name="theme-color" content="#063b3f">
 @stack('head')
 </head>
@@ -24,7 +24,7 @@
 
 @include('partials.footer')
 
-<script src="{{ asset('assets/js/main.js') }}"></script>
+<script src="{{ versioned_asset('assets/js/main.js') }}"></script>
 @stack('scripts')
 </body>
 </html>

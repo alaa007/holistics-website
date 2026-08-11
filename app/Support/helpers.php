@@ -3,6 +3,34 @@
 use App\Support\Seo;
 use Illuminate\Support\Facades\Route;
 
+if (! function_exists('versioned_asset')) {
+    /**
+     * Asset URL with a cache-busting stamp taken from the file's last
+     * modification time:
+     *
+     *     versioned_asset('assets/css/style.css')
+     *     => http://example.com/assets/css/style.css?v=1786440000
+     *
+     * The URL changes whenever the file does, so a browser fetches the new
+     * copy immediately instead of serving a stale one — and can cache it
+     * hard in between. Falls back to a plain URL if the file is missing,
+     * rather than emitting "?v=" or raising a warning.
+     */
+    function versioned_asset(string $path): string
+    {
+        static $stamps = [];
+
+        $url = asset($path);
+
+        if (! array_key_exists($path, $stamps)) {
+            $file = public_path($path);
+            $stamps[$path] = is_file($file) ? filemtime($file) : null;
+        }
+
+        return $stamps[$path] === null ? $url : "{$url}?v={$stamps[$path]}";
+    }
+}
+
 if (! function_exists('localized_route')) {
     /**
      * URL for a public page in a given language.
