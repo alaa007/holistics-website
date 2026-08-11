@@ -2,13 +2,19 @@
 
 namespace Database\Seeders;
 
+use App\Models\HomeSlide;
 use App\Models\Service;
 use App\Models\Specialty;
+use App\Models\Stat;
 use App\Models\TeamMember;
+use App\Models\ValueItem;
+use App\Models\WhyUsItem;
 use Illuminate\Database\Seeder;
 
 /**
- * Fills the Arabic columns on services and team members.
+ * Fills the Arabic columns on every piece of editable site content:
+ * home slides, stats, services, values, why-us items, team members and
+ * the specialty tags.
  *
  *     php artisan db:seed --class=ArabicTranslationsSeeder --force
  *
@@ -17,8 +23,10 @@ use Illuminate\Database\Seeder;
  * overwrites the Arabic with these values, so once the copy is being edited
  * in the panel, stop running it.
  *
- * Services match on slug. Team members match on name_en where one is set,
- * and on role_en for the unnamed generic roles.
+ * Each record is matched on the same key DatabaseSeeder uses to create it,
+ * so the two stay in step: slides and stats on order, services on slug,
+ * values and why-us items on their English text, team members on name_en
+ * (or role_en for the unnamed generic roles).
  */
 class ArabicTranslationsSeeder extends Seeder
 {
@@ -40,6 +48,106 @@ class ArabicTranslationsSeeder extends Seeder
         foreach ($this->specialties() as $slug => $labelAr) {
             Specialty::where('slug', $slug)->update(['label_ar' => $labelAr]);
         }
+
+        foreach ($this->homeSlides() as $order => $translation) {
+            HomeSlide::where('order', $order)->update($translation);
+        }
+
+        foreach ($this->stats() as $order => $labelAr) {
+            Stat::where('order', $order)->update(['label_ar' => $labelAr]);
+        }
+
+        foreach ($this->values() as $titleEn => $translation) {
+            ValueItem::where('title_en', $titleEn)->update($translation);
+        }
+
+        foreach ($this->whyUsItems() as $textEn => $textAr) {
+            WhyUsItem::where('text_en', $textEn)->update(['text_ar' => $textAr]);
+        }
+    }
+
+    /**
+     * The hero carousel. heading_prefix and heading_highlight render as two
+     * adjacent elements, so the Arabic split keeps any leading conjunction
+     * attached to the word that follows it.
+     */
+    private function homeSlides(): array
+    {
+        return [
+            1 => [
+                'eyebrow_ar' => 'رعاية صحية متكاملة في منزلك',
+                'heading_prefix_ar' => 'نُعافي',
+                'heading_highlight_ar' => 'الإنسان كاملاً',
+                'text_ar' => 'رعاية صحية منزلية وتمريض وعلاج طبيعي ومستلزمات طبية — كلها تحت مظلة واحدة موثوقة في عمّان، الأردن.',
+                'cta1_label_ar' => 'خدماتنا',
+                'cta2_label_ar' => 'اتصل بنا',
+            ],
+            2 => [
+                'eyebrow_ar' => 'رعاية تصل إليك',
+                'heading_prefix_ar' => 'تمريض ماهر',
+                'heading_highlight_ar' => 'وزيارات منزلية',
+                'text_ar' => 'ممرضون وأطباء معتمدون يقدّمون رعاية مباشرة وإنسانية في راحة منزلك، ووفق جدولك.',
+                'cta1_label_ar' => 'تعرّف على فريقنا',
+                'cta2_label_ar' => 'احجز زيارة',
+            ],
+            3 => [
+                'eyebrow_ar' => 'معدات يمكنك الاعتماد عليها',
+                'heading_prefix_ar' => 'معدات حديثة',
+                'heading_highlight_ar' => 'وتوريد موثوق',
+                'text_ar' => 'من وسائل مساعدة الحركة إلى المستلزمات الاستهلاكية، نُبقي المرضى والعيادات مجهّزين بأساسيات طبية عالية الجودة.',
+                'cta1_label_ar' => 'تصفّح توريد المعدات',
+                'cta2_label_ar' => 'اتصل بنا',
+            ],
+        ];
+    }
+
+    private function stats(): array
+    {
+        return [
+            1 => 'تأسست عام 2025',
+            2 => 'دعم زيارات منزلية على مدار الساعة',
+            3 => 'كوادر رعاية صحية معتمدة',
+            4 => 'مقرّنا في عمّان، الأردن',
+        ];
+    }
+
+    private function values(): array
+    {
+        return [
+            'Compassion' => [
+                'title_ar' => 'الرحمة',
+                'text_ar' => 'نعتني بكل مريض بتعاطف وكرامة واحترام.',
+            ],
+            'Excellence' => [
+                'title_ar' => 'التميّز',
+                'text_ar' => 'نسعى لأعلى المعايير في كل خدمة نقدّمها.',
+            ],
+            'Integrity' => [
+                'title_ar' => 'النزاهة',
+                'text_ar' => 'نؤدي عملنا بصدق وشفافية ومهنية.',
+            ],
+            'Innovation' => [
+                'title_ar' => 'الابتكار',
+                'text_ar' => 'نطوّر خدماتنا باستمرار عبر حلول رعاية صحية حديثة.',
+            ],
+            'Collaboration' => [
+                'title_ar' => 'التعاون',
+                'text_ar' => 'نعمل عن قرب مع المرضى وعائلاتهم والأطباء والشركاء لتحقيق أفضل النتائج.',
+            ],
+        ];
+    }
+
+    private function whyUsItems(): array
+    {
+        return [
+            'Highly qualified healthcare professionals' => 'كوادر رعاية صحية عالية التأهيل',
+            "Personalized treatment plans tailored to each patient's needs" => 'خطط علاج مخصّصة تناسب احتياجات كل مريض',
+            'Reliable, compassionate, and ethical care' => 'رعاية موثوقة وإنسانية وأخلاقية',
+            'High-quality medical equipment and supplies' => 'معدات ومستلزمات طبية عالية الجودة',
+            'Fast response and continuous patient support' => 'استجابة سريعة ودعم متواصل للمرضى',
+            'Commitment to international healthcare standards' => 'التزام بالمعايير الصحية الدولية',
+            'Comprehensive healthcare solutions under one roof' => 'حلول رعاية صحية شاملة تحت مظلة واحدة',
+        ];
     }
 
     /**
