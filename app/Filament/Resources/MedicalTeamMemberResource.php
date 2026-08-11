@@ -48,7 +48,8 @@ class MedicalTeamMemberResource extends Resource
             Section::make('Profile')
                 ->columns(2)
                 ->schema([
-                    TextInput::make('name')->helperText('Leave blank for a "Profile Coming Soon" placeholder card'),
+                    TextInput::make('name_en')->label('Name (English)')->helperText('Leave blank for a "Profile Coming Soon" placeholder card'),
+                    TextInput::make('name_ar')->label('Name (Arabic)')->extraInputAttributes(['dir' => 'rtl'])->helperText('Leave blank to show the English name on Arabic pages'),
                     TextInput::make('credentials')->placeholder('MBA, RN, PT...'),
                     Select::make('specialty_id')
                         ->label('Specialty')
@@ -97,7 +98,7 @@ class MedicalTeamMemberResource extends Resource
             ->defaultSort('order')
             ->columns([
                 ImageColumn::make('photo')->circular(),
-                TextColumn::make('name')->searchable()->placeholder('— placeholder —'),
+                TextColumn::make('name_en')->searchable()->placeholder('— placeholder —'),
                 TextColumn::make('role_en')->label('Role'),
                 TextColumn::make('specialty.label_en')->label('Specialty'),
                 IconColumn::make('is_active')->boolean(),

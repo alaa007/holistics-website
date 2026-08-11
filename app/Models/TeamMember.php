@@ -11,7 +11,7 @@ class TeamMember extends Model
     use HasTranslatedFields;
 
     protected $fillable = [
-        'name', 'credentials', 'role_en', 'role_ar', 'bio_en', 'bio_ar',
+        'name_en', 'name_ar', 'credentials', 'role_en', 'role_ar', 'bio_en', 'bio_ar',
         'specialty_id', 'photo', 'is_leadership', 'order', 'is_active',
     ];
 
@@ -42,11 +42,20 @@ class TeamMember extends Model
 
     public function initials(): string
     {
-        if (blank($this->name)) {
+        // Built from the displayed name, so an Arabic page shows Arabic initials.
+        $name = $this->trans('name');
+
+        if (blank($name)) {
             return '';
         }
-        $parts = array_filter(explode(' ', str_replace('Dr.', '', $this->name)));
-        $letters = array_map(fn ($p) => mb_strtoupper(mb_substr($p, 0, 1)), $parts);
+        $parts = array_filter(explode(' ', str_replace(['Dr.', 'د.'], '', $name)));
+        $letters = array_map(function ($part) {
+            // Drop the Arabic definite article, otherwise every surname
+            // starting with "ال" yields the same second initial.
+            $part = preg_replace('/^ال(?=.)/u', '', $part);
+
+            return mb_strtoupper(mb_substr($part, 0, 1));
+        }, $parts);
 
         return implode('', array_slice($letters, 0, 2));
     }

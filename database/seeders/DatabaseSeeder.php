@@ -230,19 +230,19 @@ class DatabaseSeeder extends Seeder
     private function seedTeam(): void
     {
         $leadership = [
-            ['name' => 'Abdalla Al-Tal', 'credentials' => 'MBA', 'role_en' => 'Executive Director',
+            ['name_en' => 'Abdalla Al-Tal', 'credentials' => 'MBA', 'role_en' => 'Executive Director',
                 'bio_en' => 'An experienced healthcare executive with extensive work experience in Australia and the United States, in addition to expertise in the leadership and management of healthcare organizations and multidisciplinary teams. Committed to operational excellence, quality improvement, and patient-centered care.'],
-            ['name' => 'Zaid Al-Salty', 'credentials' => 'RN, MSc, PhD Candidate', 'role_en' => 'Director of Nursing Services',
+            ['name_en' => 'Zaid Al-Salty', 'credentials' => 'RN, MSc, PhD Candidate', 'role_en' => 'Director of Nursing Services',
                 'bio_en' => 'A highly experienced nursing leader with extensive clinical and academic expertise in managing complex medical and surgical patients. Currently pursuing a PhD, he oversees nursing quality, clinical governance, and the delivery of safe, evidence-based patient care.'],
-            ['name' => 'Saham Al-Athamneh', 'credentials' => 'PT', 'role_en' => 'Consultant of Rehabilitation & Physiotherapy',
+            ['name_en' => 'Saham Al-Athamneh', 'credentials' => 'PT', 'role_en' => 'Consultant of Rehabilitation & Physiotherapy',
                 'bio_en' => 'With more than 30 years of experience in the Royal Medical Services, Saham brings extensive expertise in rehabilitation and physiotherapy. Advanced training in Europe has further strengthened his skills in comprehensive rehabilitation programs and functional recovery.'],
-            ['name' => 'Dr. Hala Al-Najjar', 'credentials' => 'PharmD', 'role_en' => 'Director of Clinical Pharmacy & Therapeutic Nutrition',
+            ['name_en' => 'Dr. Hala Al-Najjar', 'credentials' => 'PharmD', 'role_en' => 'Director of Clinical Pharmacy & Therapeutic Nutrition',
                 'bio_en' => 'A clinical pharmacist with expertise in pharmaceutical care and therapeutic nutrition, with a background in the pharmaceutical industry and regulatory affairs. She oversees clinical pharmacy services, medication management, nutritional support, and patient education — ensuring safe, evidence-based, and integrated care.'],
         ];
         foreach ($leadership as $i => $l) {
             $l['is_leadership'] = true;
             $l['order'] = $i + 1;
-            TeamMember::updateOrCreate(['name' => $l['name']], $l);
+            TeamMember::updateOrCreate(['name_en' => $l['name_en']], $l);
         }
 
         $directory = [

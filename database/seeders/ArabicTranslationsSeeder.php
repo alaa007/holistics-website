@@ -17,8 +17,8 @@ use Illuminate\Database\Seeder;
  * overwrites the Arabic with these values, so once the copy is being edited
  * in the panel, stop running it.
  *
- * Services match on slug. Team members match on name where one is set, and
- * on role_en for the unnamed generic roles.
+ * Services match on slug. Team members match on name_en where one is set,
+ * and on role_en for the unnamed generic roles.
  */
 class ArabicTranslationsSeeder extends Seeder
 {
@@ -29,12 +29,12 @@ class ArabicTranslationsSeeder extends Seeder
         }
 
         foreach ($this->namedTeamMembers() as $name => $translation) {
-            TeamMember::where('name', $name)->update($translation);
+            TeamMember::where('name_en', $name)->update($translation);
         }
 
         foreach ($this->genericTeamRoles() as $roleEn => $translation) {
-            TeamMember::where('role_en', $roleEn)->whereNull('name')->update($translation);
-            TeamMember::where('role_en', $roleEn)->where('name', '')->update($translation);
+            TeamMember::where('role_en', $roleEn)->whereNull('name_en')->update($translation);
+            TeamMember::where('role_en', $roleEn)->where('name_en', '')->update($translation);
         }
 
         foreach ($this->specialties() as $slug => $labelAr) {
@@ -137,18 +137,22 @@ class ArabicTranslationsSeeder extends Seeder
     {
         return [
             'Abdalla Al-Tal' => [
+                'name_ar' => 'عبدالله التل',
                 'role_ar' => 'المدير التنفيذي',
                 'bio_ar' => 'قيادي في مجال الرعاية الصحية يتمتع بخبرة عملية واسعة في أستراليا والولايات المتحدة، إضافة إلى خبرة في قيادة وإدارة المؤسسات الصحية والفرق متعددة التخصصات. ملتزم بالتميّز التشغيلي وتحسين الجودة والرعاية التي تتمحور حول المريض.',
             ],
             'Zaid Al-Salty' => [
+                'name_ar' => 'زيد السلطي',
                 'role_ar' => 'مدير خدمات التمريض',
                 'bio_ar' => 'قيادي تمريضي واسع الخبرة يجمع بين الخبرة السريرية والأكاديمية في إدارة الحالات الطبية والجراحية المعقّدة. يتابع حالياً دراسة الدكتوراه، ويشرف على جودة التمريض والحوكمة السريرية وتقديم رعاية آمنة قائمة على الأدلة.',
             ],
             'Saham Al-Athamneh' => [
+                'name_ar' => 'سهام العظامنة',
                 'role_ar' => 'استشاري إعادة التأهيل والعلاج الطبيعي',
                 'bio_ar' => 'بخبرة تتجاوز 30 عاماً في الخدمات الطبية الملكية، يمتلك سهام خبرة واسعة في إعادة التأهيل والعلاج الطبيعي. كما عزّز تدريبه المتقدّم في أوروبا مهاراته في برامج التأهيل الشامل واستعادة القدرات الوظيفية.',
             ],
             'Dr. Hala Al-Najjar' => [
+                'name_ar' => 'د. هالة النجار',
                 'role_ar' => 'مديرة الصيدلة السريرية والتغذية العلاجية',
                 'bio_ar' => 'صيدلانية سريرية متخصصة في الرعاية الدوائية والتغذية العلاجية، بخلفية في صناعة الأدوية والشؤون التنظيمية. تشرف على خدمات الصيدلة السريرية وإدارة الأدوية والدعم الغذائي وتثقيف المرضى — بما يضمن رعاية آمنة ومتكاملة وقائمة على الأدلة.',
             ],

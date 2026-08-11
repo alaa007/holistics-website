@@ -81,12 +81,12 @@
           <div class="card team-card">
             <div class="avatar">
               @if($l->photoUrl())
-                <img src="{{ $l->photoUrl() }}" alt="{{ $l->name }}">
+                <img src="{{ $l->photoUrl() }}" alt="{{ $l->trans('name') }}">
               @else
                 {{ $l->initials() }}
               @endif
             </div>
-            <h3>{{ $l->name }}</h3>
+            <h3>{{ $l->trans('name') }}</h3>
             <div class="role">{{ $l->trans('role') }}</div>
             <p class="bio">{{ $l->trans('bio') }}</p>
             <span class="specialty-tag">{{ $l->credentials }}</span>

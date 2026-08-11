@@ -33,12 +33,12 @@
           <div class="card team-card" data-specialty="{{ $m->specialty?->slug }}" data-name="{{ $m->trans('role') }}">
             <div class="avatar">
               @if($m->photoUrl())
-                <img src="{{ $m->photoUrl() }}" alt="{{ $m->name }}">
+                <img src="{{ $m->photoUrl() }}" alt="{{ $m->trans('name') }}">
               @else
                 <x-icon name="user" :filled="true" />
               @endif
             </div>
-            <h3>{{ $m->name ?: __('site.team.coming_soon') }}</h3>
+            <h3>{{ $m->trans('name') ?: __('site.team.coming_soon') }}</h3>
             <div class="role">{{ $m->trans('role') }}</div>
             <p class="bio">{{ $m->trans('bio') }}</p>
             <span class="specialty-tag">{{ $m->specialty?->trans('label') }}</span>

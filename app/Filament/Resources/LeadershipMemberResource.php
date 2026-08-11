@@ -46,7 +46,8 @@ class LeadershipMemberResource extends Resource
             Section::make('Profile')
                 ->columns(2)
                 ->schema([
-                    TextInput::make('name')->required(),
+                    TextInput::make('name_en')->label('Name (English)')->required(),
+                    TextInput::make('name_ar')->label('Name (Arabic)')->extraInputAttributes(['dir' => 'rtl'])->helperText('Leave blank to show the English name on Arabic pages'),
                     TextInput::make('credentials')->placeholder('MBA, RN, PT...'),
                     // Kept at half width: full width blows the image preview
                     // panel up into a mostly-empty block.
@@ -88,7 +89,7 @@ class LeadershipMemberResource extends Resource
             ->defaultSort('order')
             ->columns([
                 ImageColumn::make('photo')->circular(),
-                TextColumn::make('name')->searchable(),
+                TextColumn::make('name_en')->searchable(),
                 TextColumn::make('role_en')->label('Role'),
                 IconColumn::make('is_active')->boolean(),
             ])
