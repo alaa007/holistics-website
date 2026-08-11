@@ -71,11 +71,17 @@ class ContactSubmissionResource extends Resource
         return (string) ContactSubmission::where('is_handled', false)->count() ?: null;
     }
 
+    // Submissions arrive from the public contact form; there is nothing
+    // sensible to create by hand, so the route is gone as well as the button.
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListContactSubmissions::route('/'),
-            'create' => Pages\CreateContactSubmission::route('/create'),
             'edit' => Pages\EditContactSubmission::route('/{record}/edit'),
         ];
     }
