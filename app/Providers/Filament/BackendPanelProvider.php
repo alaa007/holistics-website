@@ -28,6 +28,10 @@ class BackendPanelProvider extends PanelProvider
             ->id('backend')
             ->path('backend')
             ->login()
+            // Account page (name, email, password) reachable from the user
+            // menu. isSimple: false renders it inside the panel layout rather
+            // than as a standalone screen with no navigation back.
+            ->profile(isSimple: false)
             ->brandName('Holistics')
             ->brandLogo(asset('assets/img/logo-full.png'))
             ->brandLogoHeight('2.75rem')
