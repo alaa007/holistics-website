@@ -65,6 +65,27 @@ html[lang="ar"]{
   --font-body:'Rubik','Segoe UI',Tahoma,Arial,sans-serif;
 }
 
+/* Arabic is a cursive script: letters join into a connected word, and
+   letter-spacing forces gaps that break those joins — Safari renders the
+   result as a row of disconnected glyphs. Reset tracking on every element
+   whose text is translated. text-transform:uppercase goes with it: it does
+   nothing to Arabic and only distorts any Latin embedded in the string.
+
+   The two Latin-only bits — the HOLISTICS wordmark and the EN/AR switch —
+   deliberately keep their tracking.
+
+   If you add letter-spacing to a translated element, add it here too. */
+html[lang="ar"] .brand-text .tag,
+html[lang="ar"] .breadcrumb,
+html[lang="ar"] .page-hero .eyebrow,
+html[lang="ar"] .hero-copy .eyebrow,
+html[lang="ar"] .section-tag,
+html[lang="ar"] .footer-col h4,
+html[lang="ar"] .specialty-tag{
+  letter-spacing:normal;
+  text-transform:none;
+}
+
 *,*::before,*::after{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
