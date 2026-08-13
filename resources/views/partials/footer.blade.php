@@ -33,7 +33,7 @@
       <div class="footer-col">
         <h4>{{ __('site.footer.get_in_touch') }}</h4>
         <ul class="footer-contact">
-          <li><x-icon name="map-pin" :filled="true" /> <span>{{ $siteSettings->trans('address') }}</span></li>
+          <li><x-icon name="map-pin" :filled="true" /> <a href="https://maps.app.goo.gl/VnJTqjS5LNe76uUY9" target="_blank" rel="noopener">{{ $siteSettings->trans('address') }}</a></li>
           <li><x-icon name="phone" :filled="true" /> <a href="{{ $siteSettings->phone_href ?? '#' }}" dir="ltr">{{ $siteSettings->phone_display ?? '' }}</a></li>
           <li><x-icon name="mail" :filled="true" /> <a href="mailto:{{ $siteSettings->email ?? '' }}">{{ $siteSettings->email ?? '' }}</a></li>
         </ul>
