@@ -51,6 +51,7 @@ class DatabaseSeeder extends Seeder
             'address_en' => 'Al-Dawha Medical Complex, Amman, Jordan',
             'address_ar' => 'مجمع الدوحة الطبي، عمّان، الأردن',
             'map_query' => '31.9526877,35.900444',
+            'map_embed_src' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6933099.635232275!2d26.144584625!3d31.952687700000023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151ca1e1c2ec3fdd%3A0x2a19318336c749d5!2sHOLISTICS!5e0!3m2!1sen!2sae!4v1786615744410!5m2!1sen!2sae',
             'seo_title_suffix_en' => 'Holistics',
             'seo_title_suffix_ar' => 'هوليستكس',
             'seo_title_en' => 'Holistics — Integrated Home Healthcare in Amman, Jordan',

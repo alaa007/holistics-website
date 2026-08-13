@@ -36,7 +36,7 @@
             <h4 style="color:#fff;">{{ __('site.services.get_started') }}</h4>
             <p>{{ __('site.services.get_started_text') }}</p>
             <a href="https://wa.me/{{ $siteSettings->whatsapp_number }}" target="_blank" rel="noopener" class="btn btn-primary btn-block"><x-icon name="whatsapp" :filled="true" /> {{ __('site.home.whatsapp_us') }}</a>
-            <a href="{{ $siteSettings->phone_href }}" class="btn btn-outline btn-block"><x-icon name="phone" :filled="true" /> {{ __('site.services.call') }} {{ $siteSettings->phone_display }}</a>
+            <a href="{{ $siteSettings->phone_href }}" class="btn btn-outline btn-block"><x-icon name="phone" :filled="true" /> {{ __('site.services.call') }} <span dir="ltr">{{ $siteSettings->phone_display }}</span></a>
           </div>
           <div class="sidebar-card">
             <h4>{{ __('site.services.other_services') }}</h4>

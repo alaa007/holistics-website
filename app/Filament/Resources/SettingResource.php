@@ -51,7 +51,8 @@ class SettingResource extends Resource
                 ->schema([
                     TextInput::make('address_en')->label('Address (English)')->required(),
                     TextInput::make('address_ar')->label('Address (Arabic)')->extraInputAttributes(['dir' => 'rtl']),
-                    TextInput::make('map_query')->label('Google Maps query')->helperText('Used in the embedded map URL')->columnSpanFull(),
+                    TextInput::make('map_query')->label('Google Maps query')->helperText('Legacy fallback, no longer shown on the site')->columnSpanFull(),
+                    Textarea::make('map_embed_src')->label('Google Maps embed URL')->helperText('Google Maps → Share → Embed a map → Copy HTML, then paste just the iframe\'s src="..." value here')->rows(3)->columnSpanFull(),
                 ]),
             Section::make('Footer')
                 ->columns(2)

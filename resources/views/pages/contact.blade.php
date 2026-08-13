@@ -30,7 +30,7 @@
               <div class="icon"><x-icon name="phone" /></div>
               <div>
                 <h4>{{ __('site.contact.call_whatsapp') }}</h4>
-                <a href="{{ $siteSettings->phone_href }}">{{ $siteSettings->phone_display }}</a>
+                <a href="{{ $siteSettings->phone_href }}" dir="ltr">{{ $siteSettings->phone_display }}</a>
               </div>
             </div>
             <div class="contact-item">
@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="map-frame">
-            <iframe src="https://www.google.com/maps?q={{ urlencode($siteSettings->map_query) }}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Holistics location map"></iframe>
+            <iframe src="{{ $siteSettings->map_embed_src ?: 'https://www.google.com/maps?q=' . urlencode($siteSettings->map_query) . '&output=embed' }}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
           </div>
         </div>
         <div>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="field">
                   <label for="f-phone">{{ __('site.contact.phone') }}</label>
-                  <input type="tel" id="f-phone" name="phone" required value="{{ old('phone') }}" placeholder="+962 xx xxx xxxx">
+                  <input type="tel" id="f-phone" name="phone" dir="ltr" required value="{{ old('phone') }}" placeholder="+962 xx xxx xxxx">
                   @error('phone')<div class="form-note">{{ $message }}</div>@enderror
                 </div>
               </div>
